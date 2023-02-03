@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -30,11 +29,15 @@ public class PlayerController : MonoBehaviour
         var res = ang * dir;
             
         cc.Move(res * speed * Time.deltaTime);
+        Rotate(res);
     }
 
     public void Rotate(Vector3 dir)
     {
-        
+        if (dir == Vector3.zero)
+            return;
+        Vector3 cur = Vector3.RotateTowards(transform.forward, dir, 1, 1);
+        transform.forward = cur;
     }
 
     public void Attack()
