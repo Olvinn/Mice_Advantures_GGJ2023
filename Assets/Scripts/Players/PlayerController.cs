@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    public float speed, rotationSpeed;
     
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Animator animator;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         if (dir == Vector3.zero)
             return;
-        Vector3 cur = Vector3.RotateTowards(transform.forward, dir, 1, 1);
+        Vector3 cur = Vector3.RotateTowards(transform.forward, dir, rotationSpeed * Time.deltaTime, 1);
         transform.forward = cur;
     }
 
