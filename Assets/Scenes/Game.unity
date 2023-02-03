@@ -467,7 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   characterController: {fileID: 1824137694}
-  animator: {fileID: 0}
+  animator: {fileID: 5104442935950365826}
 --- !u!143 &1824137694
 CharacterController:
   m_ObjectHideFlags: 0
@@ -639,6 +639,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mouse_LowPoly
       objectReference: {fileID: 0}
+    - target: {fileID: 3782226187719762840, guid: eb346ad6c26544b4eaec8f5ab2990143, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1341e2f2d53ecf749a74ef70994158fd, type: 2}
     - target: {fileID: 4975128102706835123, guid: eb346ad6c26544b4eaec8f5ab2990143, type: 3}
       propertyPath: m_Controller
       value: 
@@ -648,5 +652,10 @@ PrefabInstance:
 --- !u!4 &1168318080836636408 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1435267788122535113, guid: eb346ad6c26544b4eaec8f5ab2990143, type: 3}
+  m_PrefabInstance: {fileID: 278567215877700145}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5104442935950365826 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4975128102706835123, guid: eb346ad6c26544b4eaec8f5ab2990143, type: 3}
   m_PrefabInstance: {fileID: 278567215877700145}
   m_PrefabAsset: {fileID: 0}
