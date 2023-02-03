@@ -5,7 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     
-    [SerializeField] private CharacterController cc;
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private Animator animator;
     
     public PlayerState state { get; private set; }
 
@@ -28,8 +29,9 @@ public class PlayerController : MonoBehaviour
 
         var res = ang * dir;
             
-        cc.Move(res * speed * Time.deltaTime);
+        characterController.Move(res * speed * Time.deltaTime);
         Rotate(res);
+        animator.SetFloat("Speed", res.magnitude * speed);
     }
 
     public void Rotate(Vector3 dir)
@@ -48,8 +50,10 @@ public class PlayerController : MonoBehaviour
     #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (cc == null)
-            cc = GetComponent<CharacterController>();
+        if (characterController == null)
+            characterController = GetComponent<CharacterController>();
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
     }
     #endif
 }
