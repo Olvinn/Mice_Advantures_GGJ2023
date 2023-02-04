@@ -10,6 +10,7 @@ namespace Creatures
     public enum CreatureState
     {
         Move,
-        Attack
+        Attack,
+        Fall
     }
 }

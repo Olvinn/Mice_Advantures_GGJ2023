@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Creatures.Players
 {
@@ -10,6 +12,7 @@ namespace Creatures.Players
     
         [SerializeField] private CharacterController _characterController;
         [SerializeField] protected Animator _animator;
+        [SerializeField] private AudioController _audio;
 
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int Falling = Animator.StringToHash("Falling");
@@ -17,6 +20,15 @@ namespace Creatures.Players
         private CreatureState _state;
         private Vector3 _fallingSpeed;
         private bool _grounded;
+        private float _actualSpeed;
+
+        private Coroutine _audioCoroutine;
+
+        private void Start()
+        {
+            _state = CreatureState.Fall;
+            _audioCoroutine = StartCoroutine(AudioCoroutine());
+        }
 
         private void Rotate(Vector3 dir)
         {
@@ -28,11 +40,14 @@ namespace Creatures.Players
 
         private void Update()
         {
+            _state = CreatureState.Move;
             //get data from last move which was actually about falling
+            if (_characterController.isGrounded && !_grounded)
+                _audio.PlayGrounded();
             _grounded = _characterController.isGrounded;
             
             Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            dir.Normalize();
+            if (dir.magnitude > 1) dir.Normalize();
             
             Vector3 forwardVector = Camera.main.transform.forward;
             forwardVector.y = 0;
@@ -47,6 +62,7 @@ namespace Creatures.Players
 
             if (Input.GetButtonDown("Jump") && _grounded)
             {
+                _audio.PlayJump();
                 _fallingSpeed = Vector3.up * _jumpPower;
                 _grounded = false;
             }
@@ -59,11 +75,13 @@ namespace Creatures.Players
             }
             else
             {
+                _state = CreatureState.Fall;
                 _fallingSpeed += Physics.gravity * Time.deltaTime;
                 _characterController.Move(_fallingSpeed * Time.deltaTime);
             }
 
-            _animator.SetFloat(Speed, res.magnitude * _speed);
+            _actualSpeed = res.magnitude * _speed;
+            _animator.SetFloat(Speed, _actualSpeed);
             _animator.SetBool(Falling, !_grounded);
         }
 
@@ -78,6 +96,34 @@ namespace Creatures.Players
         public override void Attack()
         {
         
+        }
+
+        IEnumerator AudioCoroutine()
+        {
+            float _delay = Random.Range(5, 10);
+            while (true)
+            {
+                _delay -= Time.deltaTime;
+                switch (_state)
+                {
+                    case CreatureState.Move:
+                    {
+                        if (_actualSpeed > 0.5f)
+                            _audio.PlaySteps();
+                        else
+                        {
+                            _audio.StopLoops();
+                            if (_delay > 0)
+                                break;
+                            _audio.PlayIdle();
+                            _delay = Random.Range(5, 10);
+                        }
+                        break;
+                    }
+                }
+
+                yield return null;
+            }
         }
 
 #if UNITY_EDITOR
