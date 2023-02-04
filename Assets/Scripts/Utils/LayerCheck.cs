@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Utils
 {
@@ -9,6 +10,12 @@ namespace Utils
 
         protected SphereCollider _collider;
         public bool IsTouching { get; private set; }
+
+        private void Awake()
+        {
+            if (_collider == null)
+                _collider = GetComponent<SphereCollider>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
