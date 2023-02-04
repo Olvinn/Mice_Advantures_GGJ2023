@@ -14,14 +14,13 @@ namespace Creatures
         [SerializeField] private Animator _animator;
 
         private GameObject _player;
-        private GameObject _tree;
+        private GameObject[] _treeComponents;
 
         private IEnumerator _current;
 
         private NavMeshAgent _navMeshAgent;
         private Coroutine _attackRoutine;
 
-        private bool _isAttacking; // Факинг флаг....
         private static readonly int SpeedKey = Animator.StringToHash("Speed");
         private static readonly int AttackKey = Animator.StringToHash("Attack");
 
@@ -31,7 +30,7 @@ namespace Creatures
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _player = FindObjectOfType<PlayerController>().gameObject;
-            _tree = GameObject.FindGameObjectWithTag("Tree");
+            _treeComponents = GameObject.FindGameObjectsWithTag("Tree");
         }
 
         private void Start()
@@ -57,7 +56,7 @@ namespace Creatures
         {
             while (Distance >= _viewRadius)
             {
-                _navMeshAgent.SetDestination(_tree.transform.position);
+                _navMeshAgent.SetDestination(_treeComponents[0].transform.position);
                 yield return new WaitForSeconds(0.28f);
             }
 

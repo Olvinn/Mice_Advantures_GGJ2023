@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace Creatures.Players
@@ -13,6 +14,7 @@ namespace Creatures.Players
         [SerializeField] private CharacterController _characterController;
         [SerializeField] protected Animator _animator;
         [SerializeField] private AudioController _audio;
+        [SerializeField] private CheckSphereOverlap _attack;
 
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int Falling = Animator.StringToHash("Falling");
@@ -101,6 +103,7 @@ namespace Creatures.Players
         {
             _state = CreatureState.Attack;
             _animator.SetTrigger(Fight);
+            _attack.Check();
         }
 
         IEnumerator AudioCoroutine()
