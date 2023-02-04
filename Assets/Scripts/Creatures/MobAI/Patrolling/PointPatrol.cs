@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Creatures.MobAI.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,11 +9,16 @@ namespace Creatures.MobAI.Patrolling
     [RequireComponent(typeof(NavMeshAgent))]
     public class PointPatrol : Patrol
     {
-        [SerializeField] private Transform[] _points;
+        [SerializeField] private List<Transform> _points;
         [SerializeField] private float _remainingOffset;
 
         private int _pointIndex;
         private NavMeshAgent _agent;
+
+        public void AddPoint(Transform transform)
+        {
+            _points.Add(transform);
+        }
 
         private void Awake()
         {
@@ -27,7 +33,7 @@ namespace Creatures.MobAI.Patrolling
                 yield return null;
                 
                 if (!(_agent.remainingDistance <= _remainingOffset)) continue;
-                _pointIndex = (int)Mathf.Repeat(_pointIndex + 1, _points.Length);
+                _pointIndex = (int)Mathf.Repeat(_pointIndex + 1, _points.Count);
             }
         }
     }

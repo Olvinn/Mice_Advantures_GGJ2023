@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using Creatures.MobAI.Interfaces;
+﻿using System;
+using System.Collections;
+using Creatures.Players;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -9,43 +10,45 @@ namespace Creatures
     [RequireComponent(typeof(NavMeshAgent))]
     public class Enemy : Creature
     {
-        [SerializeField] private Transform _player;
-
         [SerializeField] private float _viewRadius;
-        [SerializeField] private CheckSphereOverlap _attackCheck;// Прокидывает raycast
-        [SerializeField] private Patrol _patrol;
+        [SerializeField] private CheckSphereOverlap _attackCheck; // Прокидывает raycast
         [SerializeField] private Animator _animator;
 
+        private GameObject _player;
+        private GameObject _tree;
+
         private NavMeshAgent _navMeshAgent;
-        private Coroutine _patrolRoutine;
+        private Coroutine _attackRoutine;
 
-        private bool _isPatrolling; // Факинг флаг....
+        private bool _isAttacking; // Факинг флаг....
 
-        private float Distance => Vector3.Distance(transform.position, _player.position);
+        private float Distance => Vector3.Distance(transform.position, _player.transform.position);
+
+        public event Action OnAttacked;
+        public event Action OnDamaged;
+        public event Action OnFinishAttack;
+        
 
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _player = FindObjectOfType<PlayerController>().gameObject;
+            _tree = GameObject.FindGameObjectWithTag("Tree");
         }
 
         private void FixedUpdate()
         {
             if (Distance < _viewRadius)
             {
-                _isPatrolling = false;
-                _navMeshAgent.SetDestination(_player.position);
+                _navMeshAgent.SetDestination(_player.transform.position);
             }
             else
             {
-                if (!_isPatrolling)
-                {
-                    _isPatrolling = true;
-                    StartRoutine(ref _patrolRoutine, _patrol.DoPatrol());
-                }
+                _navMeshAgent.SetDestination(_tree.transform.position);
             }
-            
-            if(_attackCheck.IsTouching) Attack();
-            
+
+            if (_attackCheck.IsTouching) Attack();
+
             _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
         }
 
@@ -59,8 +62,28 @@ namespace Creatures
 
         public override void Attack()
         {
-            Debug.Log("Attacked!");
-            _attackCheck.Check();
+            if (!_isAttacking)
+            {
+                _isAttacking = true;
+                StartRoutine(ref _attackRoutine, Attacking());
+            }
+        }
+
+        private IEnumerator Attacking()
+        {
+            OnAttacked?.Invoke();
+            yield return new WaitForSeconds(1f);
+            OnAttack();
+        }
+
+        public void OnAttack() // В аниматор
+        {
+            var got = _attackCheck.Check();
+
+            if(got) OnDamaged?.Invoke();
+            
+            OnFinishAttack?.Invoke();
+            _isAttacking = false;
         }
 
 #if UNITY_EDITOR
@@ -68,7 +91,7 @@ namespace Creatures
         {
             if (_player == null)
                 return;
-            Gizmos.color = Vector3.Distance(transform.position, _player.position) < _viewRadius
+            Gizmos.color = Vector3.Distance(transform.position, _player.transform.position) < _viewRadius
                 ? Color.red
                 : Color.green;
             Gizmos.DrawWireSphere(transform.position, _viewRadius);
