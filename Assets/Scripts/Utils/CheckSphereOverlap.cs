@@ -10,7 +10,7 @@ namespace Utils
 
         private readonly Collider[] _interactResult = new Collider[10];
 
-        public void Check()
+        public bool Check()
         {
             var size = Physics.OverlapSphereNonAlloc(transform.position, _collider.radius,
                 _interactResult,_layerMask);
@@ -19,6 +19,8 @@ namespace Utils
             {
                 _onOverlapEvent?.Invoke(_interactResult[i].gameObject);
             }
+
+            return size > 0;
         }
 
         [Serializable]

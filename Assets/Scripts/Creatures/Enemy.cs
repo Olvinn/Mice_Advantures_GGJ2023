@@ -1,4 +1,6 @@
-﻿using Creatures.Players;
+﻿using System;
+using System.Collections;
+using Creatures.Players;
 using UnityEngine;
 using UnityEngine.AI;
 using Utils;
@@ -16,11 +18,16 @@ namespace Creatures
         private GameObject _tree;
 
         private NavMeshAgent _navMeshAgent;
-        private Coroutine _patrolRoutine;
+        private Coroutine _attackRoutine;
 
-        private bool _isPatrolling; // Факинг флаг....
+        private bool _isAttacking; // Факинг флаг....
 
         private float Distance => Vector3.Distance(transform.position, _player.transform.position);
+
+        public event Action OnAttacked;
+        public event Action OnDamaged;
+        public event Action OnFinishAttack;
+        
 
         private void Awake()
         {
@@ -33,16 +40,11 @@ namespace Creatures
         {
             if (Distance < _viewRadius)
             {
-                _isPatrolling = false;
                 _navMeshAgent.SetDestination(_player.transform.position);
             }
             else
             {
-                if (!_isPatrolling)
-                {
-                    _isPatrolling = true;
-                    _navMeshAgent.SetDestination(_tree.transform.position);
-                }
+                _navMeshAgent.SetDestination(_tree.transform.position);
             }
 
             if (_attackCheck.IsTouching) Attack();
@@ -50,18 +52,38 @@ namespace Creatures
             _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
         }
 
-        /*private void StartRoutine(ref Coroutine coroutine, IEnumerator enumerator)
+        private void StartRoutine(ref Coroutine coroutine, IEnumerator enumerator)
         {
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
             coroutine = StartCoroutine(enumerator);
-        }*/
+        }
 
         public override void Attack()
         {
-            Debug.Log("Attacked!");
-            _attackCheck.Check();
+            if (!_isAttacking)
+            {
+                _isAttacking = true;
+                StartRoutine(ref _attackRoutine, Attacking());
+            }
+        }
+
+        private IEnumerator Attacking()
+        {
+            OnAttacked?.Invoke();
+            yield return new WaitForSeconds(1f);
+            OnAttack();
+        }
+
+        public void OnAttack() // В аниматор
+        {
+            var got = _attackCheck.Check();
+
+            if(got) OnDamaged?.Invoke();
+            
+            OnFinishAttack?.Invoke();
+            _isAttacking = false;
         }
 
 #if UNITY_EDITOR
