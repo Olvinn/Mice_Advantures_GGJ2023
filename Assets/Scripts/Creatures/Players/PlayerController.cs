@@ -16,6 +16,7 @@ namespace Creatures.Players
 
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int Falling = Animator.StringToHash("Falling");
+        private static readonly int Fight = Animator.StringToHash("Attack");
 
         private CreatureState _state;
         private Vector3 _fallingSpeed;
@@ -48,6 +49,9 @@ namespace Creatures.Players
             
             Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             if (dir.magnitude > 1) dir.Normalize();
+            
+            if (Input.GetButtonDown("Fire1"))
+                Attack();
             
             Vector3 forwardVector = Camera.main.transform.forward;
             forwardVector.y = 0;
@@ -95,7 +99,8 @@ namespace Creatures.Players
 
         public override void Attack()
         {
-        
+            _state = CreatureState.Attack;
+            _animator.SetTrigger(Fight);
         }
 
         IEnumerator AudioCoroutine()
