@@ -10,12 +10,13 @@ namespace Creatures.Players
     
         [SerializeField] private CharacterController _characterController;
         [SerializeField] protected Animator _animator;
-        private CreatureState State { get; set; }
 
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int Falling = Animator.StringToHash("Falling");
 
+        private CreatureState _state;
         private Vector3 _fallingSpeed;
+        private bool _grounded;
 
         private void Rotate(Vector3 dir)
         {
@@ -28,7 +29,7 @@ namespace Creatures.Players
         private void Update()
         {
             //get data from last move which was actually about falling
-            bool grounded = _characterController.isGrounded;
+            _grounded = _characterController.isGrounded;
             
             Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             
@@ -43,14 +44,14 @@ namespace Creatures.Players
             Move(res);
             Rotate(res);
 
-            if (Input.GetButtonDown("Jump") && grounded)
+            if (Input.GetButtonDown("Jump") && _grounded)
             {
                 _fallingSpeed = Vector3.up * _jumpPower;
-                grounded = false;
+                _grounded = false;
             }
 
             //falling logic
-            if (grounded)
+            if (_grounded)
             {
                 _fallingSpeed = Vector3.down;
                 _characterController.Move(_fallingSpeed);
@@ -62,12 +63,12 @@ namespace Creatures.Players
             }
 
             _animator.SetFloat(Speed, res.magnitude * _speed);
-            _animator.SetBool(Falling, !grounded);
+            _animator.SetBool(Falling, !_grounded);
         }
 
         private void Move(Vector3 dir)
         {
-            if (State == CreatureState.Attack)
+            if (_state == CreatureState.Attack)
                 return;
             
             _characterController.Move(dir * (_speed * Time.deltaTime));
