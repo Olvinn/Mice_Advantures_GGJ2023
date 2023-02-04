@@ -27,7 +27,7 @@ namespace Creatures
             _navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (Distance < _viewRadius)
             {
