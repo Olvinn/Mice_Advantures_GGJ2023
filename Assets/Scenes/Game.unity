@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 6348.535, g: 4432.9688, b: 4240.3984, a: 1}
+  m_IndirectSpecularColor: {r: 6348.5156, g: 4432.9688, b: 4240.383, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -740,6 +740,42 @@ PrefabInstance:
     - target: {fileID: 4571460954950475105, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: TrailModule.mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: TrailModule.lifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: TrailModule.sizeAffectsWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: TrailModule.sizeAffectsLifetime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: TrailModule.inheritParticleColor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: TrailModule.widthOverTrail.maxCurve.m_Curve.Array.data[1].time
+      value: 0.47607237
+      objectReference: {fileID: 0}
+    - target: {fileID: 4571460954950475106, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
+      propertyPath: TrailModule.widthOverTrail.maxCurve.m_Curve.Array.data[1].value
+      value: 0.18120766
       objectReference: {fileID: 0}
     - target: {fileID: 4571460954950475132, guid: 1271fc61ecd71fc47b6338177e871df5, type: 3}
       propertyPath: m_Name
