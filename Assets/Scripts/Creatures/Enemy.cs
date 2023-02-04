@@ -58,6 +58,8 @@ namespace Creatures
             {
                 _navMeshAgent.SetDestination(_treeComponents[0].transform.position);
                 yield return new WaitForSeconds(0.28f);
+                
+                if (_navMeshAgent.velocity.magnitude <= 1) StartState(Attacking());
             }
 
             StartState(AgroToPlayer());
@@ -71,7 +73,7 @@ namespace Creatures
                 Attack();
                 _animator.SetTrigger(AttackKey);
 
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(1.2f);
             }
 
             yield return new WaitForSeconds(2f);
