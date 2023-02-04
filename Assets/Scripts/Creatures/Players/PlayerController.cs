@@ -104,6 +104,7 @@ namespace Creatures.Players
             _state = CreatureState.Attack;
             _animator.SetTrigger(Fight);
             _attack.Check();
+            _audio.PlaySwordSlash();
         }
 
         IEnumerator AudioCoroutine()
