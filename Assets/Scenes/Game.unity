@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 6366.408, g: 4459.2812, b: 4309.8984, a: 1}
+  m_IndirectSpecularColor: {r: 6354.334, g: 4437.4062, b: 4242.375, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2931,10 +2931,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e636b9a7543c54c8242facd9735af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  rotationSpeed: 3
-  characterController: {fileID: 1824137694}
-  animator: {fileID: 5104442935950365826}
+  _speed: 10
+  _rotationSpeed: 10
+  _characterController: {fileID: 1824137694}
+  _animator: {fileID: 5104442935950365826}
 --- !u!143 &1824137694
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2950,8 +2950,8 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_SkinWidth: 0.0001
+  m_MinMoveDistance: 0.01
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1870579371
 PrefabInstance:
