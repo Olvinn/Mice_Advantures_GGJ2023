@@ -13,6 +13,10 @@ namespace Components
         
         public void ModifyHealth(int value)
         {
+            Debug.Log($"Health was modified for {value}");
+
+            _healthValue += value;
+            
             switch (value)
             {
                 case 0:
