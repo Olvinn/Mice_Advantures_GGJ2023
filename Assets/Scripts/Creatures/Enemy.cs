@@ -14,6 +14,7 @@ namespace Creatures
         [SerializeField] private float _viewRadius;
         [SerializeField] private CheckSphereOverlap _attackCheck;// Прокидывает raycast
         [SerializeField] private Patrol _patrol;
+        [SerializeField] private Animator _animator;
 
         private NavMeshAgent _navMeshAgent;
         private Coroutine _patrolRoutine;
@@ -44,6 +45,8 @@ namespace Creatures
             }
             
             if(_attackCheck.IsTouching) Attack();
+            
+            _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
         }
 
         private void StartRoutine(ref Coroutine coroutine, IEnumerator enumerator)
@@ -63,6 +66,8 @@ namespace Creatures
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
+            if (_player == null)
+                return;
             Gizmos.color = Vector3.Distance(transform.position, _player.position) < _viewRadius
                 ? Color.red
                 : Color.green;
