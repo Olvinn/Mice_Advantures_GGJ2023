@@ -32,6 +32,7 @@ namespace Creatures.Players
             _grounded = _characterController.isGrounded;
             
             Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            dir.Normalize();
             
             Vector3 forwardVector = Camera.main.transform.forward;
             forwardVector.y = 0;
