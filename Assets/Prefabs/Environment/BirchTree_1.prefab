@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6049405334607354018}
   - component: {fileID: 1317805512940060281}
+  - component: {fileID: 4297738983555727694}
   m_Layer: 0
   m_Name: BirchTree_1
   m_TagString: Untagged
@@ -230,6 +231,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2221777385545795961}
   m_Enabled: 1
+--- !u!136 &4297738983555727694
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6392893435353727512}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 9.549481
+  m_Direction: 1
+  m_Center: {x: 0, y: 4.2747407, z: -1.3815887e-14}
 --- !u!1 &9016138246242056237
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,65 +12,87 @@ namespace Creatures
         [SerializeField] private AudioClip _steps;
         [SerializeField] private AudioClip _jump;
         [SerializeField] private AudioClip _grounded;
-        [SerializeField] private AudioClip _slash;
+        [SerializeField] private AudioClip[] _slash;
+        [SerializeField] private AudioClip[] _getDamage;
+        [SerializeField] private AudioClip _dead;
+        [SerializeField] private AudioClip _block;
         
         [SerializeField] private AudioSource _source;
-
+        [SerializeField] private AudioSource _stepsSource;
+        
         public void PlaySteps()
         {
-            if (_source.clip == _steps)
+            if (_stepsSource.clip != null)
                 return;
-            _source.clip = _steps;
-            _source.loop = true;
-            _source.time = 0.5f;
-            _source.volume = volume;
-            _source.Play();
+            _stepsSource.clip = _steps;
+            _stepsSource.loop = true;
+            _stepsSource.time = 0.5f;
+            _stepsSource.volume = volume;
+            _stepsSource.Play();
         }
 
         public void PlayIdle()
         {
-            if (_source.clip == _grounded)
-                return;
-            _source.clip = _idle[Random.Range(0, _idle.Length)];
             _source.loop = false;
-            _source.volume = volume;
-            _source.Play();
+            _source.volume = volume * .75f;
+            _source.PlayOneShot(_idle[Random.Range(0, _idle.Length)]);
+        }
+
+        public void PlayDying()
+        {
+            _source.loop = false;
+            _source.volume = volume * .4f;
+            _source.PlayOneShot(_dead);
         }
 
         public void PlayJump()
         {
-            _source.clip = _jump;
             _source.loop = false;
             _source.time = 0.5f;
             _source.volume = volume;
+            _source.clip = _jump;
             _source.Play();
         }
 
         public void PlayGrounded()
         {
-            _source.clip = _grounded;
             _source.loop = false;
             _source.time = 0.7f;
             _source.volume = volume;
+            _source.clip = _grounded;
             _source.Play();
         }
 
         public void PlaySwordSlash()
         {
-            _source.clip = _slash;
             _source.loop = false;
             // _source.time = 0.2f;
-            _source.volume = .2f * volume;
-            _source.Play();
+            _source.volume = .4f * volume;
+            _source.PlayOneShot(_slash[Random.Range(0, _slash.Length)]);
         }
 
-        public void StopLoops()
+        public void PlayGetDamage()
         {
-            if (_source.clip != _steps)
+            _source.loop = false;
+            // _source.time = 0.2f;
+            _source.volume = volume* .6f;;
+            _source.PlayOneShot(_getDamage[Random.Range(0, _getDamage.Length)]);
+        }
+
+        public void StopPlayingSteps()
+        {
+            if (_stepsSource.clip == null)
                 return;
-            _source.clip = null;
-            _source.loop = true;
-            _source.Stop();
+            _stepsSource.clip = null;
+            _stepsSource.Stop();
+        }
+
+        public void PlayBlock()
+        {
+            _source.loop = false;
+            _source.time = 0.5f;
+            _source.volume = volume* .9f;;
+            _source.PlayOneShot(_block);
         }
     }
 }

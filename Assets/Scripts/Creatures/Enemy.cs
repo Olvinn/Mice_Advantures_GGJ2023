@@ -12,6 +12,7 @@ namespace Creatures
         [SerializeField] private float _viewRadius;
         [SerializeField] private CheckSphereOverlap _attackCheck; // Прокидывает raycast
         [SerializeField] private Animator _animator;
+        [SerializeField] private AudioController _audio;
 
         private GameObject _player;
         private GameObject[] _treeComponents;
@@ -82,9 +83,13 @@ namespace Creatures
             StartState(AgroToPlayer());
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             _animator.SetFloat(SpeedKey, _navMeshAgent.velocity.magnitude);
+            if (_navMeshAgent.velocity.magnitude > .1f)
+                _audio.PlaySteps();
+            else
+                _audio.StopPlayingSteps();
         }
 
         private void StartState(IEnumerator coroutine)
@@ -98,7 +103,7 @@ namespace Creatures
 
         public override void Attack()
         {
-            _attackCheck.Check();
+            _attackCheck.SendDamageNotifications();
         }
 #if UNITY_EDITOR
         private void OnDrawGizmos()

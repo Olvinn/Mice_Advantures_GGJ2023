@@ -10,7 +10,7 @@ namespace Utils
 
         private readonly Collider[] _interactResult = new Collider[10];
 
-        public bool Check()
+        public bool SendDamageNotifications()
         {
             var size = Physics.OverlapSphereNonAlloc(transform.position, _collider.radius,
                 _interactResult,_layerMask);

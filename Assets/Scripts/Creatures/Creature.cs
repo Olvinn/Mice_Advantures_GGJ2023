@@ -11,6 +11,7 @@ namespace Creatures
     {
         Move,
         Attack,
-        Fall
+        Fall,
+        Block
     }
 }
