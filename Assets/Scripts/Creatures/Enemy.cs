@@ -41,13 +41,18 @@ namespace Creatures
 
         private IEnumerator AgroToPlayer()
         {
-            while (Distance < _viewRadius)
+            if (_player != null)
             {
-                _navMeshAgent.SetDestination(_player.transform.position);
+                while (Distance < _viewRadius)
+                {
+                    if (_player == null)
+                        break;
+                    _navMeshAgent.SetDestination(_player.transform.position);
 
-                if (_attackCheck.IsTouching) StartState(Attacking());
+                    if (_attackCheck.IsTouching) StartState(Attacking());
 
-                yield return new WaitForSeconds(0.28f);
+                    yield return new WaitForSeconds(0.28f);
+                }
             }
 
             StartState(WalkToTheTree());
@@ -55,12 +60,17 @@ namespace Creatures
 
         private IEnumerator WalkToTheTree()
         {
-            while (Distance >= _viewRadius)
+            if (_player != null)
             {
-                _navMeshAgent.SetDestination(_treeComponents[0].transform.position);
-                yield return new WaitForSeconds(0.28f);
-                
-                if (_navMeshAgent.velocity.magnitude <= 1) StartState(Attacking());
+                while (Distance >= _viewRadius)
+                {
+                    if (_player == null)
+                        break;
+                    _navMeshAgent.SetDestination(_treeComponents[0].transform.position);
+                    yield return new WaitForSeconds(0.28f);
+
+                    if (_navMeshAgent.velocity.magnitude <= 1) StartState(Attacking());
+                }
             }
 
             StartState(AgroToPlayer());
