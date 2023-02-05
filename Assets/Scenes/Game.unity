@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 6348.1113, g: 4433.8516, b: 4244.0938, a: 1}
+  m_IndirectSpecularColor: {r: 6322.7207, g: 4431.4297, b: 4300.6016, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4038,6 +4038,14 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnHealed.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 6
       objectReference: {fileID: 0}
@@ -4054,6 +4062,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1462895781}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnHealed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -4066,9 +4082,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2011328666}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnHealed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1462895781}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 2011328666}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1462895781}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: SetActive
@@ -4076,6 +4100,22 @@ PrefabInstance:
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnHealed.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnHealed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdatePostProc
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: UpdatePostProc
       objectReference: {fileID: 0}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -4094,11 +4134,27 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnHealed.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Scenes.Game, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: Scenes.Game, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnHealed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: OnDamaged.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 211497862696044534, guid: 70474047c66207f4d8db436101662ebb, type: 3}
@@ -5328,6 +5384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd24ca3b1be0824eb56117bb3e4aac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vol: {fileID: 8879418}
 --- !u!1 &1477820044
 GameObject:
   m_ObjectHideFlags: 0
