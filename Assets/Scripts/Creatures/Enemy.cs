@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using Components;
 using Creatures.Players;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,7 +17,7 @@ namespace Creatures
         [SerializeField] private AudioController _audio;
 
         private GameObject _player;
-        private GameObject[] _treeComponents;
+        private GameObject _tree;
 
         private IEnumerator _current;
 
@@ -27,11 +29,13 @@ namespace Creatures
 
         private float Distance => Vector3.Distance(transform.position, _player.transform.position);
 
+        public event Action OnDead;
+
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _player = FindObjectOfType<PlayerController>().gameObject;
-            _treeComponents = GameObject.FindGameObjectsWithTag("Tree");
+            _tree = GameObject.FindGameObjectWithTag("Tree");
         }
 
         private void Start()
@@ -49,7 +53,7 @@ namespace Creatures
                         break;
                     _navMeshAgent.SetDestination(_player.transform.position);
 
-                    if (_attackCheck.IsTouching) StartState(Attacking());
+                    if (_attackCheck.IsTouching) yield return Attacking();
 
                     yield return new WaitForSeconds(0.28f);
                 }
@@ -66,10 +70,11 @@ namespace Creatures
                 {
                     if (_player == null)
                         break;
-                    _navMeshAgent.SetDestination(_treeComponents[0].transform.position);
-                    yield return new WaitForSeconds(0.28f);
+                    _navMeshAgent.SetDestination(_tree
+                        .transform.position);
 
-                    if (_navMeshAgent.velocity.magnitude <= 1) StartState(Attacking());
+                    if (_attackCheck.IsTouching) yield return Attacking();
+                    yield return new WaitForSeconds(0.28f);
                 }
             }
 
@@ -78,19 +83,13 @@ namespace Creatures
 
         private IEnumerator Attacking()
         {
-            while (_attackCheck.IsTouching)
-            {
-                _navMeshAgent.isStopped = true;
-                Attack();
-                _animator.SetTrigger(AttackKey);
+            _navMeshAgent.isStopped = true;
+            Attack();
+            _animator.SetTrigger(AttackKey);
 
-                yield return new WaitForSeconds(1.2f);
-            }
+            yield return new WaitForSeconds(2);
 
-            yield return new WaitForSeconds(2f);
             _navMeshAgent.isStopped = false;
-
-            StartState(AgroToPlayer());
         }
 
         private void Update()
@@ -114,6 +113,11 @@ namespace Creatures
         public override void Attack()
         {
             _attackCheck.SendDamageNotifications();
+        }
+
+        private void OnDestroy()
+        {
+            OnDead?.Invoke();
         }
 #if UNITY_EDITOR
         private void OnDrawGizmos()

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -40,7 +39,7 @@ namespace Scenes
             Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
-        IEnumerator Restart()
+        private IEnumerator Restart()
         {
             yield return new WaitForSeconds(3);
             SceneManager.LoadScene(1);
