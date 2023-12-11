@@ -4445,6 +4445,18 @@ PrefabInstance:
       propertyPath: backgroundColorHDR.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 592674864, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 634504314, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1078305574, guid: 70474047c66207f4d8db436101662ebb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 211497862696044531, guid: 70474047c66207f4d8db436101662ebb, type: 3}
       propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.size
       value: 4
